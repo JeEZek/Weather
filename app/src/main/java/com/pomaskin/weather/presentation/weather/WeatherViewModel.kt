@@ -9,7 +9,7 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     private val getWeatherDataUseCase: GetWeatherDataUseCase
 ): ViewModel() {
-    val state = getWeatherDataUseCase(lat = 31.5, long = 34.75)
+    val state = getWeatherDataUseCase(lat = 31.9293, long = 34.7987)
         .map { WeatherScreenState.Content(it) as WeatherScreenState }
-        .onStart { WeatherScreenState.Initial }
+        .onStart { emit(WeatherScreenState.Loading) }
 }
