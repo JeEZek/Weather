@@ -6,5 +6,9 @@ sealed class WeatherScreenState {
 
     object Initial: WeatherScreenState()
 
-    data class Content(val info: WeatherInfo): WeatherScreenState()
+    object Loading: WeatherScreenState()
+
+    data class Content(
+        val info: WeatherInfo
+    ): WeatherScreenState()
 }

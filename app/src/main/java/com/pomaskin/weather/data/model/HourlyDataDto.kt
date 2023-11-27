@@ -2,7 +2,7 @@ package com.pomaskin.weather.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class WeatherDataDto (
+data class HourlyDataDto (
     @SerializedName("time") val time: List<String>,
     @SerializedName("weather_code") val weatherCode: List<Int>,
     @SerializedName("temperature_2m") val temperature: List<Float>,
