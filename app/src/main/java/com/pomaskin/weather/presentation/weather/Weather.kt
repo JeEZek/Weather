@@ -1,6 +1,5 @@
 package com.pomaskin.weather.presentation.weather
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,7 +43,6 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun Weather() {
-    Log.d("RecompositionCheck", "Weather")
     val component = getApplicationComponent()
     val viewModel: WeatherViewModel = viewModel(factory = component.getViewModelFactory())
     val screenState = viewModel.state.collectAsState(WeatherScreenState.Initial)
@@ -56,8 +54,6 @@ fun Weather() {
 private fun WeatherContent(
     screenState: State<WeatherScreenState>
 ) {
-    Log.d("RecompositionCheck", "WeatherContent")
-
     when (val currentState = screenState.value) {
         is WeatherScreenState.Content -> {
             val daysOfWeek = currentState.info.weatherDataPerDay.values
@@ -96,7 +92,6 @@ private fun WeatherScreenStateIsContent(
     minTemp: List<Int>,
     maxTemp: List<Int>
 ) {
-    Log.d("RecompositionCheck", "WeatherScreenStateIsContent")
     var weatherState by rememberWeatherState(
         weatherInfo = currentState.info
     )
@@ -139,8 +134,6 @@ private fun WeatherScreenStateIsContent(
     }
 }
 
-
-//TODO today now if states = 0 0
 @Composable
 private fun WeatherCard(
     modifier: Modifier = Modifier,
@@ -152,7 +145,6 @@ private fun WeatherCard(
     pressure: Int,
     dayName: DayOfWeek
 ) {
-    Log.d("RecompositionCheck", "WeatherCard")
     Card(
         modifier = modifier
             .fillMaxWidth(),
@@ -226,8 +218,6 @@ private fun WeatherForecast(
     onDayStateChanged: (Int) -> Unit,
     onNowStateChanged: (Boolean) -> Unit,
 ) {
-    Log.d("RecompositionCheck", "WeatherForecast")
-
     //Hour
     LazyRow(
         modifier = Modifier.padding(vertical = 8.dp)
@@ -283,7 +273,6 @@ private fun WeatherForecast(
             }
         }
     }
-    //TODO days not 7
     //Day
     Column {
         repeat(7) {
@@ -334,7 +323,6 @@ private fun WeatherForecast(
 
 @Composable
 private fun WeatherScreenStateIsLoading() {
-    Log.d("RecompositionCheck", "WeatherScreenStateIsLoading")
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -1,12 +1,15 @@
 package com.pomaskin.weather.domain.weather
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import com.pomaskin.weather.R
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 sealed class WeatherType(
     val weatherDesc: String,
     @DrawableRes val iconRes: Int
-) {
+): Parcelable {
     object ClearSky : WeatherType(
         weatherDesc = "Clear sky",
         iconRes = R.drawable.ic_sunny
