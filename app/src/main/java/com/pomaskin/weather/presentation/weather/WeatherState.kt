@@ -1,26 +1,32 @@
 package com.pomaskin.weather.presentation.weather
 
+import android.os.Parcelable
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import com.pomaskin.weather.domain.weather.WeatherData
 import com.pomaskin.weather.domain.weather.WeatherInfo
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import java.time.DayOfWeek
 
-//TODO rememberSavable
-//TODO change errors
+@Parcelize
 @Immutable
 data class WeatherState(
     val weatherInfo: WeatherInfo,
-    val isNowState: Boolean = true,
-    val hourState: Int = weatherInfo.currentWeatherData.time.hour,
-    val dayState: Int = 0,
-) {
-    private val dailyWeatherDataList = weatherInfo.weatherDataPerDay
-    private val currentWeatherData = weatherInfo.currentWeatherData
+    @IgnoredOnParcel val isNowState: Boolean = true,
+    @IgnoredOnParcel val hourState: Int = weatherInfo.currentWeatherData.time.hour,
+    @IgnoredOnParcel val dayState: Int = 0,
+): Parcelable {
+
+    @IgnoredOnParcel private val dailyWeatherDataList = weatherInfo.weatherDataPerDay
+    @IgnoredOnParcel private val currentWeatherData = weatherInfo.currentWeatherData
 
     val dailyWeather: List<WeatherData>
         get() {
@@ -34,6 +40,7 @@ data class WeatherState(
             }
         }
 
+    //TODO change error
     val showingWeather: WeatherData
         get() {
             return dailyWeather.find {
@@ -45,7 +52,7 @@ data class WeatherState(
 @Composable
 fun rememberWeatherState(
     weatherInfo: WeatherInfo
-): MutableState<WeatherState> = remember {
+): MutableState<WeatherState> = rememberSaveable {
     mutableStateOf(
         WeatherState(
             weatherInfo
